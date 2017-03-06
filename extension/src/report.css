@@ -1,0 +1,22 @@
+progress {
+  margin-top: -16px;
+  width: 100%;
+}
+
+.total {
+  position:relative;
+  float: right;
+}
+
+.progress.total {
+  margin-top: -20px;
+}
+
+div.domain {
+  margin-top: -12px;
+}
+
+div.toggle:hover {
+  background-color:lavender;
+  border-radius:4px;
+}

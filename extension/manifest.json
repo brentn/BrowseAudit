@@ -1,0 +1,37 @@
+{
+  "name": "BrowseAudit",
+  "description": "Summarize browsing history",
+  "version": "0.1",
+  "manifest_version":2,
+  "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+  },
+  "background": {
+    "scripts": [
+        "libs/jquery.min.js",
+        "src/monitor.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+      {
+          "js": [
+            "src/activity.js"
+          ],
+          "matches": ["*://*/*"],
+          "run_at": "document_start"
+      }
+  ],
+  "browser_action": {
+    "default_title": "Report",
+    "default_popup": "src/report.html"
+  },
+  "permissions": [
+    "identity",
+    "identity.email",
+    "tabs",
+    "storage"
+  ]
+}
