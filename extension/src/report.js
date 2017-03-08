@@ -4,6 +4,7 @@
 
   function displayReport(data) {
     var report = $("<div>")
+    report.append($("<span class='loading' style='text-align:center'>loading...</span>"))
     report.append($('<h2>Report</h2>'));
     var users = getUsersFrom(data);
     var maxTime = users.reduce(function(a, b) { return (a>b.time?a:b.time) }, 0);
@@ -24,7 +25,7 @@
   function userReport(data, user, maxTime) {
     var report = $("<div class='user'>");
     var body = $("<div>");
-    body.append($('<h3>'+user.name+'</h3>'));
+    body.append($('<h3>'+user.name.split('@')[0]+'</h3>'));
     var dates = getDatesFrom(data, user);
     dates.forEach(function(date) {
       body.append($('<blah>'))
@@ -62,7 +63,7 @@
     var details = getDetailsFrom(data, user, date, domain);
     details.forEach(function(detail) {
       body.append($("<a href='"+detail.url+"' title='"+detail.url+"' target='_blank' onclick='$(this).stopPropagation();'>"+domain.hostname+'</a>'));
-      body.append($("<span class='total'>" + getTimeString(detail.timer) + "</span>"));
+      body.append($("<span class='total'>" + getTimeString(detail.time) + "</span>"));
       body.append($('<br/>'));
     })
     report.append(header);
@@ -85,17 +86,15 @@
         };
         users.push(user);
       }
-      user.time += item.timer;
+      user.time += item.time;
     });
     return users;
   }
 
   function getDatesFrom(data, user) {
     var dates = [];
-    var today = new Date();
-    var sevenDaysAgo = new Date(today.getTime() - (7 * 24 * 60 * 60 * 1000));
     data.forEach(function(item) {
-      if (item.user === user.name && new Date(item.date) >= sevenDaysAgo) {
+      if (item.user === user.name) {
         var dateString = getDateString(item.date);
         var date = dates.find(function(d) { return d.string === dateString; });
         if (! date) {
@@ -105,7 +104,7 @@
           };
           dates.push(date);
         }
-        date.time += item.timer;
+        date.time += item.time;
       }
     });
     return dates;
@@ -124,7 +123,7 @@
           };
           domains.push(domain);
         }
-        domain.time += item.timer;
+        domain.time += item.time;
       }
     });
     return domains.sort(function(a, b) { return b.time-a.time;});
@@ -159,18 +158,16 @@
   }
 
   function getRecords() {
+    $('.loading').show();
     $.ajax(URL, {
       method: 'GET',
       success: function(data) {
-        try {
-          data = JSON.parse(data);
-        } catch(ex) {
-          displayError();
-        }
         displayReport(data);
+        $('.loading').hide();
       },
       error: function() {
         displayError();
+        $('.loading').hide();
       }
     });
   }

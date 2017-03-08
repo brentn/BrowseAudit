@@ -1,3 +1,3 @@
-save to local storage
+remove dots from email id's, and hide the domain.
 
-provide a summary page
+Connect directly to db??

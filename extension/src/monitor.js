@@ -59,7 +59,6 @@
 
   function loadMonitors() {
     monitors = [];
-    window.clearTimeout(timer);
     var date = dateString(new Date());
     chrome.storage.local.get(date, function(json) {
       try {
@@ -120,7 +119,7 @@
     saveMonitors();
   }
   function active() {
-    console.debug('User is active');
+    //console.debug('User is active');
     window.clearTimeout(activityTimer);
     userInteraction = true;
     activityTimer = window.setTimeout(idle, ACTIVITY_TIMEOUT);

@@ -12,6 +12,10 @@ progress {
   margin-top: -20px;
 }
 
+div.user {
+  min-width:200px;
+}
+
 div.domain {
   margin-top: -12px;
 }
