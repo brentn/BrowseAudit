@@ -34,6 +34,7 @@ app.get('/', function(request, response) {
         }
       });
       connection.on('error', function(err) {
+        connection.release();
         console.log("Error 2 retrieving data from database");
       })
     } else {

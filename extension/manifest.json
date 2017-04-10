@@ -1,7 +1,7 @@
 {
   "name": "BrowseAudit",
   "description": "Summarize browsing history",
-  "version": "0.14",
+  "version": "0.17",
   "manifest_version":2,
   "icons": {
       "16": "icons/icon16.png",

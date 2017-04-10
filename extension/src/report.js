@@ -25,7 +25,7 @@
   function userReport(data, user, maxTime) {
     var report = $("<div class='user'>");
     var body = $("<div>");
-    body.append($('<h3>'+user.name.split('@')[0]+'</h3>'));
+    body.append($("<h3 title='" + user.name + "'>" + user.name.split('@')[0] + '</h3>'));
     var dates = getDatesFrom(data, user);
     dates.forEach(function(date) {
       body.append($('<blah>'))
@@ -88,7 +88,7 @@
       }
       user.time += item.time;
     });
-    return users;
+    return users.sort(function(a, b) {return b.name>a.name?-1:1});
   }
 
   function getDatesFrom(data, user) {
@@ -99,6 +99,7 @@
         var date = dates.find(function(d) { return d.string === dateString; });
         if (! date) {
           date = {
+            date: item.date,
             string: dateString,
             time: 0
           };
@@ -107,7 +108,7 @@
         date.time += item.time;
       }
     });
-    return dates;
+    return dates.sort(function(a, b) {return b.date>a.date?1:-1});
   }
 
   function getDomainsFrom(data, user, date) {
